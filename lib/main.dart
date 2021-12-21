@@ -1,16 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_app/controllers/auth_controller.dart';
 import 'package:getx_app/utils/constants.dart';
 import 'package:getx_app/views/login_view.dart';
-import 'package:hive_flutter/adapters.dart';
 
-late Box box;
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  box = await Hive.openBox('box');
-  // Hive.registerAdapter(Person());
+  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   runApp(const MyApp());
 }
 

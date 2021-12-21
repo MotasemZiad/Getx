@@ -4,6 +4,7 @@ import 'package:getx_app/utils/constants.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
+    required this.controller,
     this.hintText,
     this.icon,
     this.keyboardType,
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
   final bool autofocus;
   final bool obscureText;
   final void Function(String)? onChanged;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText ?? '',
           prefixIcon: Icon(

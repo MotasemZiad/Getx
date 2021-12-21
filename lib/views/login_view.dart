@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_app/controllers/auth_controller.dart';
 import 'package:getx_app/utils/constants.dart';
 import 'package:getx_app/views/registration_view.dart';
-import 'package:getx_app/views/welcome_view.dart';
 import 'package:getx_app/widgets/custom_button.dart';
 import 'package:getx_app/widgets/custom_text_field.dart';
 import 'package:getx_app/widgets/auth_rich_text.dart';
@@ -15,6 +15,23 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -54,6 +71,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   SizedBox(height: h * 0.07),
                   CustomTextField(
+                    controller: emailController,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     icon: Icons.email,
@@ -63,6 +81,7 @@ class _LoginViewState extends State<LoginView> {
                     height: h * 0.015,
                   ),
                   CustomTextField(
+                    controller: passwordController,
                     hintText: 'Password',
                     icon: Icons.lock,
                     obscureText: true,
@@ -86,7 +105,10 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   CustomButton(
                     onPressed: () {
-                      Get.to(() => const WelcomeView());
+                      AuthController.instance.login(
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
                     },
                     label: 'Login',
                   ),
