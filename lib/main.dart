@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/utils/constants.dart';
 import 'package:getx_app/views/login_view.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main(List<String> args) => runApp(const MyApp());
+late Box box;
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  box = await Hive.openBox('box');
+  // Hive.registerAdapter(Person());
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
