@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_app/controllers/auth_controller.dart';
 
 class SocialMediaRegistration extends StatelessWidget {
   const SocialMediaRegistration({
@@ -32,10 +33,25 @@ class SocialMediaRegistration extends StatelessWidget {
           alignment: WrapAlignment.center,
           children: List.generate(
             3,
-            (index) => CircleAvatar(
-              radius: 25.0,
-              backgroundColor: Colors.transparent,
-              backgroundImage: AssetImage('assets/images/${images[index]}'),
+            (index) => GestureDetector(
+              onTap: () {
+                switch (index) {
+                  case 0:
+                    //? Facebook
+                    break;
+                  case 1:
+                    AuthController.instance.signInWithGoogle();
+                    break;
+                  case 2:
+                    //? Twitter
+                    break;
+                }
+              },
+              child: CircleAvatar(
+                radius: 25.0,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage('assets/images/${images[index]}'),
+              ),
             ),
           ),
         ),

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/views/login_view.dart';
 import 'package:getx_app/views/welcome_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   static final AuthController instance = Get.find();
 
   late Rx<User?> _user;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   @override
   void onReady() {
@@ -70,5 +72,37 @@ class AuthController extends GetxController {
 
   logout() async {
     await _auth.signOut();
+  }
+
+  signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
+
+      if (googleAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        await _auth.signInWithCredential(credential);
+      }
+    } catch (e) {
+      Get.snackbar(
+        'google signin error',
+        'error message',
+        titleText: const Text(
+          'Google Sign in Failed',
+          style: TextStyle(color: Colors.white),
+        ),
+        messageText: Text(
+          'Something went wrong\n$e',
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

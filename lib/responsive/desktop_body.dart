@@ -16,36 +16,34 @@ class DesktopBody extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Container(
-                          height: 250.0,
-                          color: Colors.deepPurple[400],
-                        ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        height: 250.0,
+                        color: Colors.deepPurple[400],
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 8,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 120.0,
-                              color: Colors.deepPurple[300],
-                            ),
-                          );
-                        },
-                      ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 8,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 120.0,
+                            color: Colors.deepPurple[300],
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Padding(

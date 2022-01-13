@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/controllers/counter_controller.dart';
+import 'package:getx_app/controllers/counter2_controller.dart';
 import 'package:getx_app/views/other_view.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
-  final CounterController counterController = Get.put(CounterController());
+  // final CounterController counterController = Get.put(CounterController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +19,25 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(() => Text(
-                  'Number of Clicks: ${counterController.counter}',
+            GetBuilder<Counter2Controller>(
+              init: Counter2Controller(),
+              builder: (controller) {
+                return Text(
+                  'Number of Clicks: ${controller.counter}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18.0,
                   ),
-                )),
+                );
+              },
+            ),
+            // Obx(() => Text(
+            //       'Number of Clicks: ${counterController.counter}',
+            //       textAlign: TextAlign.center,
+            //       style: const TextStyle(
+            //         fontSize: 18.0,
+            //       ),
+            //     )),
             const SizedBox(
               height: 6.0,
             ),
@@ -38,11 +50,14 @@ class HomeView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          counterController.increment();
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: GetBuilder<Counter2Controller>(
+        builder: (controller) => FloatingActionButton(
+          onPressed: () {
+            // counterController.increment();
+            controller.increment();
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
